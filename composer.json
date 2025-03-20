@@ -1,0 +1,33 @@
+{
+  "name": "rusdyahmad/php-easyparcel",
+  "description": "A PHP wrapper for the EasyParcel API",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Rusdy Ahmad",
+      "email": "rusdyahmd@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "guzzlehttp/guzzle": "^7.0",
+    "ext-json": "*",
+    "vlucas/phpdotenv": "^5.6"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.0|^9.0",
+    "squizlabs/php_codesniffer": "^3.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "PhpEasyParcel\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "PhpEasyParcel\\Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "stable"
+}

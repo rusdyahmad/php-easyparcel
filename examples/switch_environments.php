@@ -6,7 +6,8 @@ use PhpEasyParcel\EasyParcel;
 use PhpEasyParcel\ShipmentBuilder;
 use PhpEasyParcel\Response;
 
-// Replace with your actual API key
+// Load API key from .env file or specify directly
+// If using .env, make sure to copy .env.example to .env and set your API key
 $apiKey = 'your-api-key'; // Same API key is used for both production and sandbox
 $country = 'my'; // 'my' for Malaysia, 'sg' for Singapore, etc.
 
@@ -54,9 +55,10 @@ try {
     $balance = new Response($balanceResponse);
     
     if ($balance->isSuccessful()) {
-        echo "Production Credit Balance: " . $balance->getResult()['credit_balance'] . "\n\n";
+        echo "Production Credit Balance: " . $balance->getResult() . "\n\n";
     } else {
-        echo "Error: " . $balance->getErrorMessage() . "\n\n";
+        echo "Error: " . $balance->getErrorMessage() . "\n";
+        echo "Error code: " . $balance->getErrorCode() . "\n\n";
     }
     
     // Switch to sandbox and check balance
@@ -66,9 +68,10 @@ try {
     $balance = new Response($balanceResponse);
     
     if ($balance->isSuccessful()) {
-        echo "Sandbox Credit Balance: " . $balance->getResult()['credit_balance'] . "\n\n";
+        echo "Sandbox Credit Balance: " . $balance->getResult() . "\n\n";
     } else {
-        echo "Error: " . $balance->getErrorMessage() . "\n\n";
+        echo "Error: " . $balance->getErrorMessage() . "\n";
+        echo "Error code: " . $balance->getErrorCode() . "\n\n";
     }
 } catch (\Exception $e) {
     echo "Exception: " . $e->getMessage() . "\n\n";

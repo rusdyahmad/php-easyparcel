@@ -19,3 +19,4 @@ Thumbs.db
 
 # Local test files
 /local-tests/
+test_production.php

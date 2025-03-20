@@ -28,7 +28,5 @@
     "psr-4": {
       "PhpEasyParcel\\Tests\\": "tests/"
     }
-  },
-  "minimum-stability": "stable",
-  "version": "1.0.0"
+  }
 }

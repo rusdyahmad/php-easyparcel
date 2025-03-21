@@ -52,25 +52,11 @@ class Response
     /**
      * Get result data
      *
-     * @return mixed The result data, which could be an array, string, float, etc.
-     */
-    public function getResult()
-    {
-        return $this->data['result'] ?? null;
-    }
-
-    /**
-     * Get result data as array
-     *
      * @return array|null
      */
-    public function getResultAsArray(): ?array
+    public function getResult(): ?array
     {
-        $result = $this->getResult();
-        if (is_array($result)) {
-            return $result;
-        }
-        return null;
+        return $this->data['result'] ?? null;
     }
 
     /**

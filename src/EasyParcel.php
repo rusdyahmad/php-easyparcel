@@ -311,10 +311,64 @@ class EasyParcel
                 throw new \Exception('Invalid JSON response: ' . json_last_error_msg());
             }
 
-            return $data;
+            return $this->processResponse($data);
         } catch (GuzzleException $e) {
             throw new \Exception('API request failed: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Process and normalize API response
+     *
+     * @param array $response Raw API response
+     * @return array Normalized response with success/error information
+     */
+    public function processResponse(array $response): array
+    {
+        $result = [
+            'success' => false,
+            'data' => null,
+            'error' => null,
+            'raw' => $response
+        ];
+        
+        // Check if the API call was successful
+        if (isset($response['error_code']) && $response['error_code'] === '0') {
+            $result['success'] = true;
+            
+            // Handle different response structures
+            if (isset($response['result'])) {
+                // For bulk operations that return success/fail arrays
+                if (is_array($response['result']) && isset($response['result']['success'])) {
+                    $result['data'] = $response['result']['success'];
+                    
+                    // If there are failures, include them in the error field
+                    if (isset($response['result']['fail']) && !empty($response['result']['fail'])) {
+                        $result['error'] = $response['result']['fail'];
+                    }
+                } 
+                // For operations that return an array of results
+                else if (is_array($response['result']) && !empty($response['result'])) {
+                    $result['data'] = $response['result'];
+                }
+                // For operations that return a single result
+                else {
+                    $result['data'] = $response['result'];
+                }
+            } else {
+                // For operations that don't return a result field
+                $result['data'] = $response;
+            }
+        } else {
+            // API call failed
+            $result['success'] = false;
+            $result['error'] = [
+                'code' => $response['error_code'] ?? 'unknown',
+                'message' => $response['error_remark'] ?? 'Unknown error'
+            ];
+        }
+        
+        return $result;
     }
 
     /**
@@ -389,5 +443,39 @@ class EasyParcel
     public function getBaseUrl(): string
     {
         return $this->baseUrl;
+    }
+
+    /**
+     * Make a direct API call with a custom endpoint
+     *
+     * @param string $action API action (without the '?ac=' prefix)
+     * @param array $params Additional parameters (api key will be added automatically)
+     * @return array Response data
+     * @throws \Exception
+     */
+    public function call(string $action, array $params = []): array
+    {
+        // Add API key to parameters
+        $params['api'] = $this->apiKey;
+        
+        // Construct the endpoint URL
+        $url = $this->baseUrl . '?ac=' . $action;
+        
+        try {
+            $response = $this->client->post($url, [
+                'form_params' => $params,
+            ]);
+
+            $body = $response->getBody()->getContents();
+            $data = json_decode($body, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new \Exception('Invalid JSON response: ' . json_last_error_msg());
+            }
+
+            return $this->processResponse($data);
+        } catch (GuzzleException $e) {
+            throw new \Exception('API request failed: ' . $e->getMessage());
+        }
     }
 }

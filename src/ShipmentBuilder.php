@@ -2,6 +2,22 @@
 
 namespace PhpEasyParcel;
 
+/**
+ * ShipmentBuilder - A fluent interface for building EasyParcel shipment data
+ *
+ * @package PhpEasyParcel
+ * @method static ShipmentBuilder create() Create a new shipment builder
+ * @method ShipmentBuilder from(string $name, string $contact, string $address1, string $city, string $postcode, string $state, string $country) Set pickup details
+ * @method ShipmentBuilder to(string $name, string $contact, string $address1, string $city, string $postcode, string $state, string $country) Set receiver details
+ * @method ShipmentBuilder fromCompany(string $company) Set sender company name
+ * @method ShipmentBuilder toEmail(string $email) Set receiver email
+ * @method ShipmentBuilder withDimensions(float $weight, float $width, float $length, float $height) Set parcel dimensions
+ * @method ShipmentBuilder withContent(string $content, float $value) Set parcel content
+ * @method ShipmentBuilder withServiceId(string $serviceId) Set service ID
+ * @method ShipmentBuilder withCollectionDate(string $date) Set collection date
+ * @method ShipmentBuilder withReference(string $reference) Set reference number
+ * @method array build() Get the shipment data
+ */
 class ShipmentBuilder
 {
     /**

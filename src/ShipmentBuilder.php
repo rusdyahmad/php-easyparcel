@@ -226,6 +226,18 @@ class ShipmentBuilder
     }
 
     /**
+     * Set reference number
+     *
+     * @param string $reference Reference number for the shipment
+     * @return self
+     */
+    public function withReference(string $reference): self
+    {
+        $this->data['reference_number'] = $reference;
+        return $this;
+    }
+
+    /**
      * Enable insurance addon
      *
      * @param bool $enabled Whether to enable insurance

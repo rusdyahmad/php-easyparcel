@@ -6,17 +6,6 @@ namespace PhpEasyParcel;
  * ShipmentBuilder - A fluent interface for building EasyParcel shipment data
  *
  * @package PhpEasyParcel
- * @method static ShipmentBuilder create() Create a new shipment builder
- * @method ShipmentBuilder from(string $name, string $contact, string $address1, string $city, string $postcode, string $state, string $country) Set pickup details
- * @method ShipmentBuilder to(string $name, string $contact, string $address1, string $city, string $postcode, string $state, string $country) Set receiver details
- * @method ShipmentBuilder fromCompany(string $company) Set sender company name
- * @method ShipmentBuilder toEmail(string $email) Set receiver email
- * @method ShipmentBuilder withDimensions(float $weight, float $width, float $length, float $height) Set parcel dimensions
- * @method ShipmentBuilder withContent(string $content, float $value) Set parcel content
- * @method ShipmentBuilder withServiceId(string $serviceId) Set service ID
- * @method ShipmentBuilder withCollectionDate(string $date) Set collection date
- * @method ShipmentBuilder withReference(string $reference) Set reference number
- * @method array build() Get the shipment data
  */
 class ShipmentBuilder
 {
@@ -28,9 +17,9 @@ class ShipmentBuilder
     /**
      * Create a new shipment builder
      *
-     * @return self
+     * @return ShipmentBuilder A new instance of ShipmentBuilder
      */
-    public static function create(): self
+    public static function create(): ShipmentBuilder
     {
         return new self();
     }
@@ -45,7 +34,7 @@ class ShipmentBuilder
      * @param string $postcode Sender postcode
      * @param string $state Sender state
      * @param string $country Sender country code
-     * @return self
+     * @return ShipmentBuilder
      */
     public function from(
         string $name,
@@ -55,7 +44,7 @@ class ShipmentBuilder
         string $postcode,
         string $state,
         string $country
-    ): self {
+    ): ShipmentBuilder {
         $this->data['pick_name'] = $name;
         $this->data['pick_contact'] = $contact;
         $this->data['pick_addr1'] = $address1;
@@ -71,9 +60,9 @@ class ShipmentBuilder
      * Set sender company name
      *
      * @param string $company Company name
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function fromCompany(string $company): self
+    public function fromCompany(string $company): ShipmentBuilder
     {
         $this->data['pick_company'] = $company;
         return $this;
@@ -83,9 +72,9 @@ class ShipmentBuilder
      * Set sender address line 2
      *
      * @param string $address2 Address line 2
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function fromAddress2(string $address2): self
+    public function fromAddress2(string $address2): ShipmentBuilder
     {
         $this->data['pick_addr2'] = $address2;
         return $this;
@@ -95,9 +84,9 @@ class ShipmentBuilder
      * Set sender mobile number
      *
      * @param string $mobile Mobile number
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function fromMobile(string $mobile): self
+    public function fromMobile(string $mobile): ShipmentBuilder
     {
         $this->data['pick_mobile'] = $mobile;
         return $this;
@@ -113,7 +102,7 @@ class ShipmentBuilder
      * @param string $postcode Receiver postcode
      * @param string $state Receiver state
      * @param string $country Receiver country code
-     * @return self
+     * @return ShipmentBuilder
      */
     public function to(
         string $name,
@@ -123,7 +112,7 @@ class ShipmentBuilder
         string $postcode,
         string $state,
         string $country
-    ): self {
+    ): ShipmentBuilder {
         $this->data['send_name'] = $name;
         $this->data['send_contact'] = $contact;
         $this->data['send_addr1'] = $address1;
@@ -139,9 +128,9 @@ class ShipmentBuilder
      * Set receiver company name
      *
      * @param string $company Company name
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function toCompany(string $company): self
+    public function toCompany(string $company): ShipmentBuilder
     {
         $this->data['send_company'] = $company;
         return $this;
@@ -151,9 +140,9 @@ class ShipmentBuilder
      * Set receiver address line 2
      *
      * @param string $address2 Address line 2
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function toAddress2(string $address2): self
+    public function toAddress2(string $address2): ShipmentBuilder
     {
         $this->data['send_addr2'] = $address2;
         return $this;
@@ -163,9 +152,9 @@ class ShipmentBuilder
      * Set receiver mobile number
      *
      * @param string $mobile Mobile number
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function toMobile(string $mobile): self
+    public function toMobile(string $mobile): ShipmentBuilder
     {
         $this->data['send_mobile'] = $mobile;
         return $this;
@@ -175,9 +164,9 @@ class ShipmentBuilder
      * Set receiver email
      *
      * @param string $email Email address
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function toEmail(string $email): self
+    public function toEmail(string $email): ShipmentBuilder
     {
         $this->data['send_email'] = $email;
         return $this;
@@ -190,9 +179,9 @@ class ShipmentBuilder
      * @param float $width Width in cm
      * @param float $length Length in cm
      * @param float $height Height in cm
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function withDimensions(float $weight, float $width = 0, float $length = 0, float $height = 0): self
+    public function withDimensions(float $weight, float $width = 0, float $length = 0, float $height = 0): ShipmentBuilder
     {
         $this->data['weight'] = $weight;
         $this->data['width'] = $width;
@@ -207,9 +196,9 @@ class ShipmentBuilder
      *
      * @param string $content Content description
      * @param float $value Content value
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function withContent(string $content, float $value = 0): self
+    public function withContent(string $content, float $value = 0): ShipmentBuilder
     {
         $this->data['content'] = $content;
         $this->data['value'] = $value;
@@ -221,9 +210,9 @@ class ShipmentBuilder
      * Set service ID
      *
      * @param string $serviceId Service ID
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function withServiceId(string $serviceId): self
+    public function withServiceId(string $serviceId): ShipmentBuilder
     {
         $this->data['service_id'] = $serviceId;
         return $this;
@@ -233,9 +222,9 @@ class ShipmentBuilder
      * Set collection date
      *
      * @param string $date Collection date (YYYY-MM-DD)
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function withCollectionDate(string $date): self
+    public function withCollectionDate(string $date): ShipmentBuilder
     {
         $this->data['collect_date'] = $date;
         return $this;
@@ -245,9 +234,9 @@ class ShipmentBuilder
      * Set reference number
      *
      * @param string $reference Reference number for the shipment
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function withReference(string $reference): self
+    public function withReference(string $reference): ShipmentBuilder
     {
         $this->data['reference_number'] = $reference;
         return $this;
@@ -257,9 +246,9 @@ class ShipmentBuilder
      * Enable insurance addon
      *
      * @param bool $enabled Whether to enable insurance
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function withInsurance(bool $enabled = true): self
+    public function withInsurance(bool $enabled = true): ShipmentBuilder
     {
         $this->data['addon_insurance_enabled'] = $enabled ? 1 : 0;
         return $this;
@@ -269,9 +258,9 @@ class ShipmentBuilder
      * Enable SMS notification
      *
      * @param bool $enabled Whether to enable SMS notification
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function withSmsNotification(bool $enabled = true): self
+    public function withSmsNotification(bool $enabled = true): ShipmentBuilder
     {
         $this->data['sms'] = $enabled ? 1 : 0;
         return $this;
@@ -281,9 +270,9 @@ class ShipmentBuilder
      * Enable WhatsApp tracking
      *
      * @param bool $enabled Whether to enable WhatsApp tracking
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function withWhatsAppTracking(bool $enabled = true): self
+    public function withWhatsAppTracking(bool $enabled = true): ShipmentBuilder
     {
         $this->data['addon_whatsapp_tracking_enabled'] = $enabled ? 1 : 0;
         return $this;
@@ -293,9 +282,9 @@ class ShipmentBuilder
      * Set parcel category ID
      *
      * @param string $categoryId Parcel category ID
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function withParcelCategory(string $categoryId): self
+    public function withParcelCategory(string $categoryId): ShipmentBuilder
     {
         $this->data['parcel_category_id'] = $categoryId;
         return $this;
@@ -305,9 +294,9 @@ class ShipmentBuilder
      * Set pickup point
      *
      * @param string $point Pickup point
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function withPickupPoint(string $point): self
+    public function withPickupPoint(string $point): ShipmentBuilder
     {
         $this->data['pick_point'] = $point;
         return $this;
@@ -317,9 +306,9 @@ class ShipmentBuilder
      * Set dropoff point
      *
      * @param string $point Dropoff point
-     * @return self
+     * @return ShipmentBuilder
      */
-    public function withDropoffPoint(string $point): self
+    public function withDropoffPoint(string $point): ShipmentBuilder
     {
         $this->data['send_point'] = $point;
         return $this;

@@ -3,7 +3,7 @@
   "description": "A PHP wrapper for the EasyParcel API",
   "type": "library",
   "license": "MIT",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "authors": [
     {
       "name": "Rusdy Ahmad",
